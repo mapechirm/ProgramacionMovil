@@ -1,65 +1,63 @@
-/* import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>wuenas jijij</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: 30,
+    padding: 24,
   },
-}); */
+});
 
-import { Image, ScrollView, Text } from "react-native";
+export default function FontTest() {
+  const fonts = [
+    ["Montserrat", 24],
+    ["Inter", 18],
+    ["Barlow", 20],
+    ["Poppins", 14],
+  ];
 
-const logo = {
-  uri: "https://scontent.fqro3-1.fna.fbcdn.net/v/t39.30808-6/270811461_10159593443572964_311196138685309059_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=174925&_nc_ohc=cIVBA3q6GXkAX9688pT&_nc_ht=scontent.fqro3-1.fna&oh=00_AfCMHwC_RD6_woUHS0XZclHdHUfQG5ktnFl87ag_juGowg&oe=647DF617",
-  width: 64,
-  height: 64,
-};
+  return (
+    <View style={styles.container}>
+      {fonts.map(([family, size]) => (
+        <TextSize key={family} family={family} size={size} />
+      ))}
+    </View>
+  );
+}
 
-const App = () => (
-  <ScrollView>
-    <Text style={{ fontSize: 25 }}>Logo</Text>
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Text style={{ fontSize: 25 }}>de</Text>
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Text style={{ fontSize: 25 }}>la</Text>
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Text style={{ fontSize: 25 }}>universidad</Text>
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Text style={{ fontSize: 25 }}>UPQ</Text>
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-    <Image source={logo} />
-  </ScrollView>
-);
+function TextSize({ size, family }) {
+  const [loaded] = useFonts({
+    Montserrat: require("./assets/fonts/Montserrat.ttf"),
+    Inter: require("./assets/fonts/Inter.ttf"),
+    Barlow: require("./assets/fonts/Barlow.ttf"),
+    Poppins: require("./assets/fonts/Poppins.ttf"),
+  });
 
-export default App;
+  if (!loaded) {
+    return null;
+  }
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Text style={{ fontSize: size, fontFamily: family }}>
+        Texto de prueba
+      </Text>
+      <Text
+        style={{
+          fontSize: size / ((1 + Math.sqrt(5)) / 2),
+          fontFamily: family,
+        }}
+      >
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ipsa omnis
+        reiciendis, consequatur doloremque qui itaque ad eum, dolorem quis
+        delectus quasi eius magnam deserunt laborum expedita obcaecati! Beatae
+        incidunt pariatur voluptate ad molestias officia, qui nemo suscipit
+        cumque accusantium totam.
+      </Text>
+    </View>
+  );
+}
